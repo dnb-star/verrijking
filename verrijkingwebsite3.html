@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISW Hoogeland Verrijking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .category-Small { border-top: 8px solid #10b981; }
+        .category-Medium { border-top: 8px solid #3b82f6; }
+        .category-Large { border-top: 8px solid #f59e0b; }
+        .category-Extra-Large { border-top: 8px solid #ef4444; }
+        
+        .card { 
+            transition: all 0.3s ease; 
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card:hover { transform: translateY(-5px); }
+        
+        .filter-btn { cursor: pointer; transition: all 0.2s; border: 2px solid #e5e7eb; }
+        .filter-btn.active { background-color: #63b132; color: white; border-color: #63b132; transform: scale(1.05); }
+        
+        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); overflow-y: auto; padding: 20px; }
+        .modal-content { background-color: white; margin: 2% auto; padding: 30px; border-radius: 15px; width: 100%; max-width: 900px; position: relative; }
+        
+        .btn-link { 
+            display: inline-flex; 
+            align-items: center; 
+            background-color: #f3f4f6; 
+            border: 1px solid #e5e7eb; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            margin-bottom: 8px; 
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-link:hover { background-color: #63b132; color: white; border-color: #63b132; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="logoHoogeland.jpg" alt="ISW Hoogeland Logo" class="h-12 w-auto" onerror="this.src='https://via.placeholder.com/150x50?text=ISW+Hoogeland'">
+                <h1 class="text-xl font-bold text-gray-700">ISW Hoogeland Verrijking</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#" class="hover:text-green-600">Home</a>
+                <a href="#projecten" class="hover:text-green-600">Projecten</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="bg-[#63b132] text-white py-16 px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Kies hier je verrijking op maat</h2>
+        <p class="text-lg opacity-90 max-w-2xl mx-auto italic">Ontdek je talenten en verleg je grenzen met de extra projecten van ISW Hoogeland.</p>
+    </section>
+
+    <main id="projecten" class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto mb-12 space-y-8">
+            <div class="text-center">
+                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Stap 1: Filter op type project</span>
+                <div class="flex flex-wrap justify-center gap-2" id="size-filters">
+                    <button onclick="setSizeFilter('all')" data-filter="all" class="size-btn filter-btn active px-4 py-2 bg-white rounded-full text-xs font-bold">Alles</button>
+                    <button onclick="setSizeFilter('Small')" data-filter="Small" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">S = Small</button>
+                    <button onclick="setSizeFilter('Medium')" data-filter="Medium" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">M = Medium</button>
+                    <button onclick="setSizeFilter('Large')" data-filter="Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">L = Large</button>
+                    <button onclick="setSizeFilter('Extra Large')" data-filter="Extra Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">XL = Extra Large</button>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Stap 2: Voor welke klas zoek je?</span>
+                <div class="flex flex-wrap justify-center gap-2" id="grade-filters">
+                    <button onclick="setGradeFilter('all')" data-filter="all" class="grade-btn filter-btn active px-4 py-2 bg-white rounded-full text-xs font-bold">Alle klassen</button>
+                    <button onclick="setGradeFilter(1)" data-filter="1" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 1</button>
+                    <button onclick="setGradeFilter(2)" data-filter="2" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 2</button>
+                    <button onclick="setGradeFilter(3)" data-filter="3" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 3</button>
+                    <button onclick="setGradeFilter(4)" data-filter="4" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 4</button>
+                    <button onclick="setGradeFilter(5)" data-filter="5" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 5</button>
+                    <button onclick="setGradeFilter(6)" data-filter="6" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 6</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        
+        <div id="no-results" class="hidden text-center py-20 text-gray-400">
+            <i class="fas fa-search mb-4 text-4xl block"></i>
+            Geen projecten gevonden voor deze combinatie.
+        </div>
+    </main>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content shadow-2xl">
+            <div class="flex justify-between items-start mb-6">
+                <div id="modalTitleArea">
+                    <span id="modalCategory" class="text-xs font-bold px-3 py-1 rounded-full border mb-2 inline-block"></span>
+                    <h2 id="modalTitle" class="text-3xl font-bold text-gray-800">Project Titel</h2>
+                </div>
+                <button onclick="closeProject()" class="text-gray-400 hover:text-gray-600 text-3xl font-light">&times;</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-[#63b132] mb-2 uppercase text-xs tracking-widest">Wat ga je doen?</h4>
+                    <p id="modalDesc" class="text-gray-700 leading-relaxed mb-6"></p>
+                    
+                    <h4 class="font-bold text-[#63b132] mb-4 uppercase text-xs tracking-widest">Plan van Aanpak</h4>
+                    <div id="modalPlan" class="space-y-3 text-gray-700 mb-8"></div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 h-fit">
+                    <h4 class="font-bold mb-4 text-gray-800 border-b pb-2">Gegevens</h4>
+                    <ul class="space-y-4 text-sm mb-6">
+                        <li class="flex items-center"><i class="far fa-clock w-6 text-[#63b132]"></i> <span id="modalTime"></span></li>
+                        <li class="flex items-center"><i class="fas fa-euro-sign w-6 text-[#63b132]"></i> <span id="modalCost"></span></li>
+                        <li class="flex items-center"><i class="fas fa-graduation-cap w-6 text-[#63b132]"></i> <span id="modalTarget"></span></li>
+                    </ul>
+                    <h4 class="font-bold mb-3 text-[10px] uppercase text-gray-400 tracking-widest">Links</h4>
+                    <div id="modalLinksArea"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * PROJECT DATA
+         * Hier kun je projecten bewerken, toevoegen of verwijderen.
+         * Let op: houd de structuur (haken en komma's) intact.
+         */
+        const projectData = {
+            p1: { 
+                title: "Typecursus: Het Typedoolhof", 
+                cat: "Small", 
+                catClass: "bg-green-100 text-green-800 border-green-200", 
+                textClass: "text-green-600", 
+                desc: "Leer razendsnel en blind typen via het platform EdClub. Een onmisbare vaardigheid voor al je schoolwerk en je latere carrière.", 
+                time: "15 min/dag", 
+                cost: "Gratis", 
+                target: "Alle leerlingen", 
+                grades: [1, 2, 3, 4, 5, 6], 
+                links: [
+                    { label: "Start Typedoolhof", url: "https://www.edclub.com/nl/library/het-typedoolhof" }
+                ], 
+                plan: [
+                    "Plan wanneer je hieraan wilt werken. Het beste is 15 minuten per dag, bijvoorbeeld elke dag na het avondeten. Als dat niet lukt, kan drie keer per week een half uur ook.",
+                    "Een account maken is fijn om je vorderingen bij te kunnen houden.",
+                ] 
+            },
+            p8: { 
+                title: "Office Basis", 
+                cat: "Small", 
+                catClass: "bg-green-100 text-green-800 border-green-200", 
+                textClass: "text-green-600", 
+                desc: "Leer werken met Word, Excel of Powerpoint. Essentieel voor goede verslagen en presentaties.", 
+                time: "3-6 uur", 
+                cost: "60,50 euro", 
+                target: "Onderbouw", 
+                grades: [1, 2, 3], 
+                links: [
+                    { label: "X-cel Kids Cursussen", url: "https://www.x-cel.nl/categorie/kids-cursussen/" }
+                ], 
+                plan: [
+                    "Bekijk de cursusomschrijvingen en kies welke je wilt doen.",
+                    "Als je twee programma's wilt leren (bijvoorbeeld Powerpoint en Excel) dan kost dat slechts 6 euro extra.",
+                    "Overleg met je ouders over de kosten.",
+                    "Plan in je agenda een moment om hieraan te werken, bijvoorbeeld één uur per week op een vaste tijd.",
+                ] 
+            },
+            p9: { 
+                title: "Introductie programmeren", 
+                cat: "Small", 
+                catClass: "bg-green-100 text-green-800 border-green-200", 
+                textClass: "text-green-600", 
+                desc: "Leer de logica achter software begrijpen door animaties te maken met Javascript.", 
+                time: "5 uur", 
+                cost: "gratis", 
+                target: "Alle leerlingen", 
+                grades: [1, 2, 3, 4, 5, 6], 
+                links: [
+                    { label: "Khan Academy Programmeren", url: "https://www.khanacademy.org/computing/computer-programming" }
+                ], 
+                plan: [
+                    "Plan in je agenda een moment om hieraan te werken, bijvoorbeeld één uur per week op een vaste tijd.",
+                    "Begin met Unit 1. Dit bestaat uit heel veel kleine onderdelen.",
+                    "Je kunt direct zelf meedoen met de instructie. Je hoeft niets te downloaden; het werkt gewoon in je browser.",
+                    "Alle onderdelen van Unit 1 doen kost ongeveer 5 uur. Ben je enthousiast geworden? Dan is er daarna nog veel meer te leren in de volgende units."
+                ] 
+            },
+            p10: { 
+                title: "Oefen voor Wiskunde Olympiade", 
+                cat: "Medium", 
+                catClass: "bg-blue-100 text-blue-800 border-blue-200", 
+                textClass: "text-blue-600", 
+                desc: "Vind je wiskundige puzzels leuk om te doen? Daag jezelf dan uit om beter te worden in opgaven van de Wiskunde Olympiade door in het boek Successtrategieën te werken.", 
+                time: "variabel", 
+                cost: "Gratis", 
+                target: "Klas 3-5", 
+                grades: [3, 4, 5], 
+                links: [
+                    { label: "Successtrategieën", url: "https://wiskundeolympiade.nl/publicaties/boeken/successtrategieen" }
+                ], 
+                plan: [
+                    "Download de PDF van het boek Successtrategieën via de link op deze pagina.",
+                    "Werk je liever in een papieren boek? Mail dnb@isw.info om er eentje te lenen.",
+                    "Plan in je agenda een moment om hieraan te werken, bijvoorbeeld één uur per week op een vaste tijd.",
+                    "Je kunt in januari meedoen met de Wiskunde Olympiade. Geef je op bij je wiskundedocent in november of december."
+                ] 
+            },
+            p2: { 
+                title: "Programmeren (JS / Python)", 
+                cat: "Medium", 
+                catClass: "bg-blue-100 text-blue-800 border-blue-200", 
+                textClass: "text-blue-600", 
+                desc: "Leer bouwen in JavaScript of Python. Ideaal voor leerlingen die van techniek en logica houden.", 
+                time: "15 uur", 
+                cost: "Gratis", 
+                target: "Bovenbouw", 
+                grades: [4, 5, 6], 
+                links: [
+                    { label: "Codecademy (Javascript)", url: "https://www.codecademy.com/learn/introduction-to-javascript"}, {label: "Coursera (Python)", url: "https://www.coursera.org/learn/python" }
+                ], 
+                plan: [
+                    "Bekijk de cursusomschrijvingen en kies welke programmeertaal je graag wilt leren.",
+                    "Plan in je agenda momenten om hieraan te werken."
+                ] 
+            },
+            p4: { 
+                title: "Word of Excel Meester", 
+                cat: "Small", 
+                catClass: "bg-green-100 text-green-800 border-green-200", 
+                textClass: "text-green-600", 
+                desc: "Word expert in Office 365. Handig voor je profielwerkstuk, maar ook voor in je toekomstige baan.", 
+                time: "3-6 uur", 
+                cost: "47 euro", 
+                target: "Bovenbouw", 
+                grades: [4, 5, 6], 
+                links: [
+                    { label: "Bekijk cursus op Soofos", url: "https://soofos.nl/cursus/online-cursus-excel/" }
+                ], 
+                plan: [
+                    "Bekijk de cursusomschrijvingen en kies of je Word of Excel wil doen.",
+                    "Overleg met je ouders over de kosten.",
+                    "Plan in je agenda een moment om hieraan te werken, bijvoorbeeld één uur per week op een vaste tijd.",
+                ] 
+            },
+            p5: { 
+                title: "Snuffelstage", 
+                cat: "Large", 
+                catClass: "bg-yellow-100 text-yellow-800 border-yellow-200", 
+                textClass: "text-yellow-600", 
+                desc: "Kijk een paar dagen mee in de praktijk bij een bedrijf dat jou interessant lijkt.", 
+                time: "3-5 dagen", 
+                cost: "Gratis", 
+                target: "Bovenbouw", 
+                grades: [4, 5, 6], 
+                links: [
+                    { label: "Mail de decaan", url: "mailto:klp@isw.info" }
+                ], 
+                plan: [
+                    "Overleg met de decaan of met je ouders welk bedrijf of welke instelling interessant zou zijn om een stage te gaan doen.",
+                    "Bekijk in je rooster welke dagdelen het beste zouden uitkomen om lessen te missen.",
+                    "Mail het bedrijf. Leg uit wie je bent en waarom je graag een stage wilt komen doen. Gebruik eventueel AI om een nette mail te maken."
+                ] 
+            },
+            p3: { 
+                title: "Taalcursus in Vught", 
+                cat: "Extra Large", 
+                catClass: "bg-red-100 text-red-800 border-red-200", 
+                textClass: "text-red-600", 
+                desc: "Dompel je een week lang onder in een vreemde taal bij het gerenommeerde Regina Coeli.", 
+                time: "1 week", 
+                cost: "Hoog", 
+                target: "Klas 5-6", 
+                grades: [5, 6], 
+                links: [
+                    { label: "Website Regina Coeli", url: "https://www.reginacoeli.nl" }
+                ], 
+                plan: [
+                    "Bekijk de cursussen en tarieven op de website.",
+                    "Bespreek de kosten met je ouders.",
+                    "Overleg met je mentor over welke week geschikt is om school te missen hiervoor."
+                ] 
+            },
+            p6: { 
+                title: "Volksuniversiteit Westland", 
+                cat: "Medium", 
+                catClass: "bg-blue-100 text-blue-800 border-blue-200", 
+                textClass: "text-blue-600", 
+                desc: "Volg een cursus Japans, Italiaans, fotografie, tekenen, vaarbewijs, opkomen voor jezelf of nog iets anders.", 
+                time: "variabel", 
+                cost: "100-200 euro", 
+                target: "Klas 3-6", 
+                grades: [3, 4, 5, 6], 
+                links: [
+                    { label: "Programma Volksuniversiteit", url: "https://www.vuwestland.nl" }
+                ], 
+                plan: [
+                    "Bekijk het cursusaanbod op de website.",
+                    "De cursussen zijn meestal in de avond, bijvoorbeeld zes weken lang 2 uur. Check of de cursus niet samenvalt met je sport of andere verplichtingen.",
+                    "Overleg met je ouders over de kosten.",
+                ] 
+            },
+             p11: { 
+                title: "EHBO-cursus", 
+                cat: "Small", 
+                catClass: "bg-green-100 text-green-800 border-green-200", 
+                textClass: "text-green-600", 
+                desc: "EHBO-cursus van het Rode Kruis. Vier uur online en vier uur op locatie. ", 
+                time: "8 uur", 
+                cost: "125 euro", 
+                target: "Vanaf 16 jaar", 
+                grades: [5, 6], 
+                links: [
+                    { label: "Cursus Rode Kruis", url: "https://shop.rodekruis.nl/cursus-basis-ehbo-online-klassikaal" }
+                ], 
+                plan: [
+                    "Overleg met je ouders over de kosten.",
+                    "Bekijk op welke momenten het cursusdeel op locatie is en of je dan beschikbaar bent.",
+                    "Schrijf je in."
+                ] 
+            },
+            p7: { 
+                title: "Hulpdocent onderbouw", 
+                cat: "Medium", 
+                catClass: "bg-blue-100 text-blue-800 border-blue-200", 
+                textClass: "text-blue-600", 
+                desc: "Ondersteun een docent bij uitleg of practica en ontdek of het onderwijs iets voor jou is.", 
+                time: "1-2 uur/week", 
+                cost: "gratis", 
+                target: "Bovenbouw", 
+                grades: [4, 5, 6], 
+                links: [
+                    { label: "Mail een docent", url: "https://isw.magister.net" }
+                ], 
+                plan: [
+                    "Kies je favoriete vak.",
+                    "Bespreek met je docent of je kunt helpen bij een onderbouwklas.",
+                    "Kijk welk uur en welke klas in jouw rooster past.",
+                    "Overleg met de docent wat er in de lessen gaat gebeuren, hoe jij kan helpen en wat je kunt voorbereiden."
+                ] 
+            }
+        };
+
+        let currentSizeFilter = 'all';
+        let currentGradeFilter = 'all';
+
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            const noResults = document.getElementById('no-results');
+            grid.innerHTML = '';
+            let visibleCount = 0;
+
+            Object.keys(projectData).forEach(id => {
+                const p = projectData[id];
+                const sizeMatch = (currentSizeFilter === 'all' || p.cat === currentSizeFilter);
+                const gradeMatch = (currentGradeFilter === 'all' || p.grades.includes(parseInt(currentGradeFilter)));
+
+                if (sizeMatch && gradeMatch) {
+                    visibleCount++;
+                    const card = document.createElement('div');
+                    card.className = `bg-white rounded-xl shadow-md overflow-hidden card category-${p.cat.replace(/\s+/g, '-')} cursor-pointer`;
+                    card.onclick = () => openProject(id);
+                    card.innerHTML = `
+                        <div class="p-6 flex flex-col h-full">
+                            <div class="text-xs font-bold ${p.textClass} mb-2 tracking-widest uppercase">${p.cat}</div>
+                            <h3 class="text-xl font-bold mb-2">${p.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">${p.desc}</p>
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex flex-wrap gap-x-4 gap-y-2">
+                                <div class="flex items-center text-[11px] text-gray-500"><i class="fas fa-graduation-cap w-5 text-gray-400"></i>${p.target}</div>
+                                <div class="flex items-center text-[11px] text-gray-500"><i class="fas fa-euro-sign w-5 text-gray-400"></i>${p.cost}</div>
+                                <div class="flex items-center text-[11px] text-gray-500"><i class="far fa-clock w-5 text-gray-400"></i>${p.time}</div>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+            noResults.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        function setSizeFilter(size) {
+            currentSizeFilter = size;
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter == size));
+            renderProjects();
+        }
+
+        function setGradeFilter(grade) {
+            currentGradeFilter = grade;
+            document.querySelectorAll('.grade-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter == grade));
+            renderProjects();
+        }
+
+        function openProject(id) {
+            const p = projectData[id];
+            document.getElementById('modalTitle').innerText = p.title;
+            document.getElementById('modalCategory').innerText = p.cat;
+            document.getElementById('modalCategory').className = `text-xs font-bold px-3 py-1 rounded-full border mb-2 inline-block ${p.catClass}`;
+            document.getElementById('modalDesc').innerText = p.desc;
+            document.getElementById('modalTime').innerText = p.time;
+            document.getElementById('modalCost').innerText = p.cost;
+            document.getElementById('modalTarget').innerText = p.target;
+            
+            const linksArea = document.getElementById('modalLinksArea');
+            linksArea.innerHTML = '';
+            p.links.forEach(l => {
+                const a = document.createElement('a');
+                a.href = l.url; a.target = "_blank"; a.className = "btn-link text-sm font-bold";
+                a.innerHTML = `<i class="fas fa-external-link-alt mr-2 text-xs"></i> ${l.label}`;
+                linksArea.appendChild(a);
+            });
+            
+            const planDiv = document.getElementById('modalPlan');
+            planDiv.innerHTML = p.plan.map(s => `<p class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm text-sm">${s}</p>`).join('');
+
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProject() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = e => { if (e.target.id == 'projectModal') closeProject(); };
+        renderProjects();
+    </script>
+</body>
+</html>
