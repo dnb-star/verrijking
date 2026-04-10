@@ -20,8 +20,8 @@
         }
         .card:hover { transform: translateY(-5px); }
         
-        .filter-btn { cursor: pointer; transition: all 0.2s; border: 2px solid #e5e7eb; }
-        .filter-btn.active { background-color: #63b132; color: white; border-color: #63b132; transform: scale(1.05); }
+        .filter-btn { cursor: pointer; transition: all 0.2s; border: 2px solid #e5e7eb; position: relative; }
+        .filter-btn.active { background-color: #63b132; color: white; border-color: #63b132; }
         
         .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); overflow-y: auto; padding: 20px; }
         .modal-content { background-color: white; margin: 2% auto; padding: 30px; border-radius: 15px; width: 100%; max-width: 900px; position: relative; }
@@ -61,28 +61,29 @@
     </section>
 
     <main id="projecten" class="container mx-auto px-6 py-12">
-        <div class="max-w-4xl mx-auto mb-12 space-y-8">
-            <div class="text-center">
-                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Stap 1: Filter op type project</span>
+        <div class="max-w-4xl mx-auto mb-12 space-y-8 text-center">
+            
+            <div>
+                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Filter op type project (meerdere mogelijk)</span>
                 <div class="flex flex-wrap justify-center gap-2" id="size-filters">
-                    <button onclick="setSizeFilter('all')" data-filter="all" class="size-btn filter-btn active px-4 py-2 bg-white rounded-full text-xs font-bold">Alles</button>
-                    <button onclick="setSizeFilter('Small')" data-filter="Small" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">S = Small</button>
-                    <button onclick="setSizeFilter('Medium')" data-filter="Medium" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">M = Medium</button>
-                    <button onclick="setSizeFilter('Large')" data-filter="Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">L = Large</button>
-                    <button onclick="setSizeFilter('Extra Large')" data-filter="Extra Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold">XL = Extra Large</button>
+                    <button onclick="toggleSizeFilter('Small')" data-filter="Small" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold shadow-sm">S = Small</button>
+                    <button onclick="toggleSizeFilter('Medium')" data-filter="Medium" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold shadow-sm">M = Medium</button>
+                    <button onclick="toggleSizeFilter('Large')" data-filter="Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold shadow-sm">L = Large</button>
+                    <button onclick="toggleSizeFilter('Extra Large')" data-filter="Extra Large" class="size-btn filter-btn px-4 py-2 bg-white rounded-full text-xs font-bold shadow-sm">XL = Extra Large</button>
+                    <button onclick="resetFilters('size')" class="px-4 py-2 text-xs text-gray-400 hover:text-red-500 font-bold transition-colors">Reset</button>
                 </div>
             </div>
 
-            <div class="text-center">
-                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Stap 2: Voor welke klas zoek je?</span>
+            <div>
+                <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Voor welke klas(sen) zoek je?</span>
                 <div class="flex flex-wrap justify-center gap-2" id="grade-filters">
-                    <button onclick="setGradeFilter('all')" data-filter="all" class="grade-btn filter-btn active px-4 py-2 bg-white rounded-full text-xs font-bold">Alle klassen</button>
-                    <button onclick="setGradeFilter(1)" data-filter="1" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 1</button>
-                    <button onclick="setGradeFilter(2)" data-filter="2" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 2</button>
-                    <button onclick="setGradeFilter(3)" data-filter="3" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 3</button>
-                    <button onclick="setGradeFilter(4)" data-filter="4" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 4</button>
-                    <button onclick="setGradeFilter(5)" data-filter="5" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 5</button>
-                    <button onclick="setGradeFilter(6)" data-filter="6" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold">Klas 6</button>
+                    <button onclick="toggleGradeFilter(1)" data-filter="1" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 1</button>
+                    <button onclick="toggleGradeFilter(2)" data-filter="2" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 2</button>
+                    <button onclick="toggleGradeFilter(3)" data-filter="3" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 3</button>
+                    <button onclick="toggleGradeFilter(4)" data-filter="4" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 4</button>
+                    <button onclick="toggleGradeFilter(5)" data-filter="5" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 5</button>
+                    <button onclick="toggleGradeFilter(6)" data-filter="6" class="grade-btn filter-btn px-6 py-2 bg-white rounded-full text-xs font-bold shadow-sm">Klas 6</button>
+                    <button onclick="resetFilters('grade')" class="px-4 py-2 text-xs text-gray-400 hover:text-red-500 font-bold transition-colors">Reset</button>
                 </div>
             </div>
         </div>
@@ -91,7 +92,7 @@
         
         <div id="no-results" class="hidden text-center py-20 text-gray-400">
             <i class="fas fa-search mb-4 text-4xl block"></i>
-            Geen projecten gevonden voor deze combinatie.
+            Geen projecten gevonden voor deze selectie.
         </div>
     </main>
 
@@ -129,11 +130,6 @@
     </div>
 
     <script>
-        /**
-         * PROJECT DATA
-         * Hier kun je projecten bewerken, toevoegen of verwijderen.
-         * Let op: houd de structuur (haken en komma's) intact.
-         */
         const projectData = {
             p1: { 
                 title: "Typecursus: Het Typedoolhof", 
@@ -145,9 +141,7 @@
                 cost: "Gratis", 
                 target: "Alle leerlingen", 
                 grades: [1, 2, 3, 4, 5, 6], 
-                links: [
-                    { label: "Start Typedoolhof", url: "https://www.edclub.com/nl/library/het-typedoolhof" }
-                ], 
+                links: [{ label: "Start Typedoolhof", url: "https://www.edclub.com/nl/library/het-typedoolhof" }], 
                 plan: [
                     "Plan wanneer je hieraan wilt werken. Het beste is 15 minuten per dag, bijvoorbeeld elke dag na het avondeten. Als dat niet lukt, kan drie keer per week een half uur ook.",
                     "Een account maken is fijn om je vorderingen bij te kunnen houden.",
@@ -163,9 +157,7 @@
                 cost: "60,50 euro", 
                 target: "Onderbouw", 
                 grades: [1, 2, 3], 
-                links: [
-                    { label: "X-cel Kids Cursussen", url: "https://www.x-cel.nl/categorie/kids-cursussen/" }
-                ], 
+                links: [{ label: "X-cel Kids Cursussen", url: "https://www.x-cel.nl/categorie/kids-cursussen/" }], 
                 plan: [
                     "Bekijk de cursusomschrijvingen en kies welke je wilt doen.",
                     "Als je twee programma's wilt leren (bijvoorbeeld Powerpoint en Excel) dan kost dat slechts 6 euro extra.",
@@ -180,12 +172,10 @@
                 textClass: "text-green-600", 
                 desc: "Leer de logica achter software begrijpen door animaties te maken met Javascript.", 
                 time: "5 uur", 
-                cost: "Gratis", 
+                cost: "gratis", 
                 target: "Alle leerlingen", 
                 grades: [1, 2, 3, 4, 5, 6], 
-                links: [
-                    { label: "Khan Academy Programmeren", url: "https://www.khanacademy.org/computing/computer-programming" }
-                ], 
+                links: [{ label: "Khan Academy Programmeren", url: "https://www.khanacademy.org/computing/computer-programming" }], 
                 plan: [
                     "Plan in je agenda een moment om hieraan te werken, bijvoorbeeld één uur per week op een vaste tijd.",
                     "Begin met Unit 1. Dit bestaat uit heel veel kleine onderdelen.",
@@ -203,9 +193,7 @@
                 cost: "Gratis", 
                 target: "Klas 3-5", 
                 grades: [3, 4, 5], 
-                links: [
-                    { label: "Successtrategieën", url: "https://wiskundeolympiade.nl/publicaties/boeken/successtrategieen" }
-                ], 
+                links: [{ label: "Successtrategieën", url: "https://wiskundeolympiade.nl/publicaties/boeken/successtrategieen" }], 
                 plan: [
                     "Download de PDF van het boek Successtrategieën via de link op deze pagina.",
                     "Werk je liever in een papieren boek? Mail dnb@isw.info om er eentje te lenen.",
@@ -223,9 +211,7 @@
                 cost: "Gratis", 
                 target: "Bovenbouw", 
                 grades: [4, 5, 6], 
-                links: [
-                    { label: "Codecademy (Javascript)", url: "https://www.codecademy.com/learn/introduction-to-javascript"}, {label: "Coursera (Python)", url: "https://www.coursera.org/learn/python" }
-                ], 
+                links: [{ label: "Codecademy (Javascript)", url: "https://www.codecademy.com/learn/introduction-to-javascript"}, {label: "Coursera (Python)", url: "https://www.coursera.org/learn/python" }], 
                 plan: [
                     "Bekijk de cursusomschrijvingen en kies welke programmeertaal je graag wilt leren.",
                     "Plan in je agenda momenten om hieraan te werken."
@@ -241,9 +227,7 @@
                 cost: "47 euro", 
                 target: "Bovenbouw", 
                 grades: [4, 5, 6], 
-                links: [
-                    { label: "Bekijk cursus op Soofos", url: "https://soofos.nl/cursus/online-cursus-excel/" }
-                ], 
+                links: [{ label: "Bekijk cursus op Soofos", url: "https://soofos.nl/cursus/online-cursus-excel/" }], 
                 plan: [
                     "Bekijk de cursusomschrijvingen en kies of je Word of Excel wil doen.",
                     "Overleg met je ouders over de kosten.",
@@ -260,9 +244,7 @@
                 cost: "Gratis", 
                 target: "Bovenbouw", 
                 grades: [4, 5, 6], 
-                links: [
-                    { label: "Mail de decaan", url: "mailto:klp@isw.info" }
-                ], 
+                links: [{ label: "Mail de decaan", url: "mailto:klp@isw.info" }], 
                 plan: [
                     "Overleg met de decaan of met je ouders welk bedrijf of welke instelling interessant zou zijn om een stage te gaan doen.",
                     "Bekijk in je rooster welke dagdelen het beste zouden uitkomen om lessen te missen.",
@@ -279,9 +261,7 @@
                 cost: "Hoog", 
                 target: "Klas 5-6", 
                 grades: [5, 6], 
-                links: [
-                    { label: "Website Regina Coeli", url: "https://www.reginacoeli.nl" }
-                ], 
+                links: [{ label: "Website Regina Coeli", url: "https://www.reginacoeli.nl" }], 
                 plan: [
                     "Bekijk de cursussen en tarieven op de website.",
                     "Bespreek de kosten met je ouders.",
@@ -294,13 +274,11 @@
                 catClass: "bg-blue-100 text-blue-800 border-blue-200", 
                 textClass: "text-blue-600", 
                 desc: "Volg een cursus Japans, Italiaans, fotografie, tekenen, vaarbewijs, opkomen voor jezelf of nog iets anders.", 
-                time: "Variabel", 
+                time: "variabel", 
                 cost: "100-200 euro", 
                 target: "Klas 3-6", 
                 grades: [3, 4, 5, 6], 
-                links: [
-                    { label: "Programma Volksuniversiteit", url: "https://www.vuwestland.nl" }
-                ], 
+                links: [{ label: "Programma Volksuniversiteit", url: "https://www.vuwestland.nl" }], 
                 plan: [
                     "Bekijk het cursusaanbod op de website.",
                     "De cursussen zijn meestal in de avond, bijvoorbeeld zes weken lang 2 uur. Check of de cursus niet samenvalt met je sport of andere verplichtingen.",
@@ -317,9 +295,7 @@
                 cost: "125 euro", 
                 target: "Vanaf 16 jaar", 
                 grades: [5, 6], 
-                links: [
-                    { label: "Cursus Rode Kruis", url: "https://shop.rodekruis.nl/cursus-basis-ehbo-online-klassikaal" }
-                ], 
+                links: [{ label: "Cursus Rode Kruis", url: "https://shop.rodekruis.nl/cursus-basis-ehbo-online-klassikaal" }], 
                 plan: [
                     "Overleg met je ouders over de kosten.",
                     "Bekijk op welke momenten het cursusdeel op locatie is en of je dan beschikbaar bent.",
@@ -351,12 +327,10 @@
                 textClass: "text-blue-600", 
                 desc: "Ondersteun een docent bij uitleg of practica en ontdek of het onderwijs iets voor jou is.", 
                 time: "1-2 uur/week", 
-                cost: "Gratis", 
+                cost: "gratis", 
                 target: "Bovenbouw", 
                 grades: [4, 5, 6], 
-                links: [
-                    { label: "Mail een docent", url: "https://isw.magister.net" }
-                ], 
+                links: [{ label: "Mail een docent", url: "https://isw.magister.net" }], 
                 plan: [
                     "Kies je favoriete vak.",
                     "Bespreek met je docent of je kunt helpen bij een onderbouwklas.",
@@ -366,8 +340,9 @@
             }
         };
 
-        let currentSizeFilter = 'all';
-        let currentGradeFilter = 'all';
+        // State voor multi-select filters
+        let activeSizes = new Set();
+        let activeGrades = new Set();
 
         function renderProjects() {
             const grid = document.getElementById('project-grid');
@@ -377,8 +352,12 @@
 
             Object.keys(projectData).forEach(id => {
                 const p = projectData[id];
-                const sizeMatch = (currentSizeFilter === 'all' || p.cat === currentSizeFilter);
-                const gradeMatch = (currentGradeFilter === 'all' || p.grades.includes(parseInt(currentGradeFilter)));
+                
+                // Als er geen filters geselecteerd zijn, telt alles als een match
+                const sizeMatch = activeSizes.size === 0 || activeSizes.has(p.cat);
+                
+                // Match als tenminste één geselecteerde klas in de grades array van het project zit
+                const gradeMatch = activeGrades.size === 0 || p.grades.some(g => activeGrades.has(g));
 
                 if (sizeMatch && gradeMatch) {
                     visibleCount++;
@@ -403,15 +382,38 @@
             noResults.classList.toggle('hidden', visibleCount > 0);
         }
 
-        function setSizeFilter(size) {
-            currentSizeFilter = size;
-            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter == size));
+        function toggleSizeFilter(size) {
+            if (activeSizes.has(size)) {
+                activeSizes.delete(size);
+            } else {
+                activeSizes.add(size);
+            }
+            updateButtonStyles('size-btn', activeSizes);
             renderProjects();
         }
 
-        function setGradeFilter(grade) {
-            currentGradeFilter = grade;
-            document.querySelectorAll('.grade-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter == grade));
+        function toggleGradeFilter(grade) {
+            if (activeGrades.has(grade)) {
+                activeGrades.delete(grade);
+            } else {
+                activeGrades.add(grade);
+            }
+            updateButtonStyles('grade-btn', activeGrades);
+            renderProjects();
+        }
+
+        function updateButtonStyles(className, activeSet) {
+            document.querySelectorAll('.' + className).forEach(btn => {
+                const val = className === 'grade-btn' ? parseInt(btn.dataset.filter) : btn.dataset.filter;
+                btn.classList.toggle('active', activeSet.has(val));
+            });
+        }
+
+        function resetFilters(type) {
+            if (type === 'size') activeSizes.clear();
+            if (type === 'grade') activeGrades.clear();
+            updateButtonStyles('size-btn', activeSizes);
+            updateButtonStyles('grade-btn', activeGrades);
             renderProjects();
         }
 
